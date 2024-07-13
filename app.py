@@ -11,12 +11,6 @@ def is_valid_recipient(email):
     return re.match(r"^[^@]+@gmail\.com$", email)
 
 
-def read_email_body(file_path):
-    print(f"Trying to read file from: {file_path}")
-    with open(file_path, "r", encoding="utf-8") as file:
-        return file.read()
-
-
 def send_email(sender, password, recipient, subject, body):
     if not is_valid_recipient(recipient):
         raise ValueError("Invalid recipient address")
@@ -45,10 +39,11 @@ def handle_send_email():
     sender_password = data.get("sender_password")
     recipient_email = data.get("recipient_email")
     email_subject = data.get("subject")
-    email_body_file = data.get("body_file")
+
+    # 固定邮件内容
+    email_body = "This is a test email body."
 
     try:
-        email_body = read_email_body(email_body_file)
         send_email(
             sender_email, sender_password, recipient_email, email_subject, email_body
         )
@@ -58,4 +53,4 @@ def handle_send_email():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
