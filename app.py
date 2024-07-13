@@ -39,7 +39,7 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logging.debug("Email sent successfully!\n")
+        logging.debug("Email sent successfully!")
     except Exception as e:
         logging.error(f"Failed to send email: {e}")
 
