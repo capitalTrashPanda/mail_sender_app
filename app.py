@@ -15,7 +15,7 @@ logging.basicConfig(
     filename="app.log",
     level=logging.DEBUG,
     format="%(asctime)s - %(message)s",
-    datefmt="%H:%M:%S",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 
@@ -40,6 +40,7 @@ def send_email(sender, password, recipient, subject, body):
             server.login(sender, password)
             server.send_message(msg)
         logging.debug("Email sent successfully")
+        logging.debug(" " * len(f"Email sent successfully"))
     except Exception as e:
         logging.error(f"Failed to send email: {e}")
 
@@ -53,7 +54,6 @@ def handle_send_email():
     email_subject = data.get("subject")
 
     logging.debug(f"Email Subject: {email_subject}")
-    logging.debug("")
 
     if "body_file" in request.files:
         body_file = request.files["body_file"]
