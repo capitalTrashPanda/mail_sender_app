@@ -12,6 +12,7 @@ def is_valid_recipient(email):
 
 
 def read_email_body(file_path):
+    print(f"Trying to read file from: {file_path}")
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
