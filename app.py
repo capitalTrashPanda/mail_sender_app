@@ -17,6 +17,8 @@ def is_valid_recipient(email):
 
 
 def read_email_body(file_path):
+    logging.debug(f"Current working directory: {os.getcwd()}")
+    logging.debug(f"Absolute file path: {os.path.abspath(file_path)}")
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
 
