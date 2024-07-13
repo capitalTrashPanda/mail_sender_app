@@ -51,10 +51,13 @@ def handle_send_email():
     recipient_email = data.get("recipient_email")
     email_subject = data.get("subject")
 
+    logging.debug(f"Email Subject: {email_subject}")
+    logging.debug("")
+
     if "body_file" in request.files:
         body_file = request.files["body_file"]
         email_body = body_file.read().decode("utf-8")
-        logging.debug(f"Email body: {email_body}")
+
     else:
         email_body = "No body file provided."
 
