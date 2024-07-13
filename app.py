@@ -8,7 +8,11 @@ import logging
 app = Flask(__name__)
 
 # 设置日志记录
-logging.basicConfig(filename="app.log", level=logging.DEBUG)
+logging.basicConfig(
+    filename="app.log",
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 
 
 def is_valid_recipient(email):
@@ -31,7 +35,7 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logging.info("Email sent successfully")
+        logging.debug("Email sent successfully")
     except Exception as e:
         logging.error(f"Failed to send email: {e}")
 
