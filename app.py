@@ -39,8 +39,7 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logging.debug("Email sent successfully")
-        logging.debug(" " * len(f"Email sent successfully"))
+        logging.debug("Email sent successfully!\n")
     except Exception as e:
         logging.error(f"Failed to send email: {e}")
 
@@ -53,7 +52,9 @@ def handle_send_email():
     recipient_email = data.get("recipient_email")
     email_subject = data.get("subject")
 
-    logging.debug(f"Email Subject: {email_subject}")
+    logging.debug(f"Subject: {email_subject}")
+    logging.debug(f"Sender: {sender_email}")
+    logging.debug(f"Recipient: {recipient_email}")
 
     if "body_file" in request.files:
         body_file = request.files["body_file"]
