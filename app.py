@@ -73,7 +73,11 @@ def get_logs():
     try:
         with open("app.log", "r") as file:
             logs = file.readlines()
-        logs_formatted = "<pre>" + "".join(logs) + "</pre>"
+
+        logs_formatted = ""
+        for line in logs:
+            logs_formatted += f"<pre>{line}</pre>"
+
         return logs_formatted, 200
     except Exception as e:
         return str(e), 500
