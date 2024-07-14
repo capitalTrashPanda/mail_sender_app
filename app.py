@@ -32,7 +32,7 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logger.debug("Email sent successfully!\n")
+        logger.debug("Email sent successfully!")
     except Exception as e:
         logger.error(f"Failed to send email: {e}")
 
@@ -61,6 +61,7 @@ def handle_send_email():
         send_email(
             sender_email, sender_password, recipient_email, email_subject, email_body
         )
+        logger.opt(raw=True).debug("")
         return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
         logger.error(f"Error: {e}")
