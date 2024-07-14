@@ -32,7 +32,7 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logger.debug("Email sent successfully!", end="")
+        logger.debug("Email sent successfully!")
     except Exception as e:
         logger.error(f"Failed to send email: {e}")
 
@@ -73,7 +73,7 @@ def get_logs():
     try:
         with open("app.log", "r") as file:
             logs = file.readlines()
-        logs_formatted = "<pre>" + "<br>".join(logs) + "</pre>"
+        logs_formatted = "<pre>" + "".join(logs) + "</pre>"
         return logs_formatted, 200
     except Exception as e:
         return str(e), 500
