@@ -3,20 +3,13 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import re
-import logging
+from loguru import logger
 
 app = Flask(__name__)
 
-log = logging.getLogger("werkzeug")
-log.setLevel(logging.ERROR)
+logger.add("app.log", level="DEBUG", format="{time:YYYY-MM-DD HH:mm:ss} - {message}")
 
-# 设置日志记录
-logging.basicConfig(
-    filename="app.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+logger.disable("werkzeug")
 
 
 def is_valid_recipient(email):
@@ -39,9 +32,9 @@ def send_email(sender, password, recipient, subject, body):
             server.starttls()
             server.login(sender, password)
             server.send_message(msg)
-        logging.debug("Email sent successfully!")
+        logger.debug("Email sent successfully!")
     except Exception as e:
-        logging.error(f"Failed to send email: {e}")
+        logger.error(f"Failed to send email: {e}")
 
 
 @app.route("/send_email", methods=["POST"])
@@ -52,9 +45,9 @@ def handle_send_email():
     recipient_email = data.get("recipient_email")
     email_subject = data.get("subject")
 
-    logging.debug(f"Subject: {email_subject}")
-    logging.debug(f"Sender: {sender_email}")
-    logging.debug(f"Recipient: {recipient_email}")
+    logger.debug(f"Subject: {email_subject}")
+    logger.debug(f"Sender: {sender_email}")
+    logger.debug(f"Recipient: {recipient_email}")
 
     if "body_file" in request.files:
         body_file = request.files["body_file"]
@@ -62,14 +55,16 @@ def handle_send_email():
 
     else:
         email_body = "No body file provided."
+        logger.debug("No body file provided.")
 
     try:
         send_email(
             sender_email, sender_password, recipient_email, email_subject, email_body
         )
+        logger.debug("")
         return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logger.error(f"Error: {e}")
         return jsonify({"error": str(e)}), 400
 
 
