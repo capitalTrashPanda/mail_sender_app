@@ -61,7 +61,6 @@ def handle_send_email():
         send_email(
             sender_email, sender_password, recipient_email, email_subject, email_body
         )
-        logger.opt(raw=True).log("DEBUG", "\n")
         return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
         logger.error(f"Error: {e}")
@@ -77,7 +76,7 @@ def get_logs():
         logs_formatted = ""
         for line in logs:
             logs_formatted += f"<pre>{line}</pre>"
-
+        logs_formatted += f"<br>"
         return logs_formatted, 200
     except Exception as e:
         return str(e), 500
