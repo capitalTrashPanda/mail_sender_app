@@ -61,8 +61,8 @@ def handle_send_email():
         send_email(
             sender_email, sender_password, recipient_email, email_subject, email_body
         )
-        return jsonify({"message": "Email sent successfully"}), 200
         logger.opt(raw=True).debug("")
+        return jsonify({"message": "Email sent successfully"}), 200
     except Exception as e:
         logger.error(f"Error: {e}")
         return jsonify({"error": str(e)}), 400
